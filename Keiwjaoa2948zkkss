@@ -1,0 +1,411 @@
+local HEADERNYA = 'GAPAKE'
+local g = {}
+g.last = gg.getFile()
+g.info = nil
+g.config = gg.EXT_CACHE_DIR .. "/" .. gg.getFile():match("[^/]+$") .. "cfg"
+g.data = loadfile(g.config)
+if g.data ~= nil then g.info = g.data() g.data = nil end
+if g.info == nil then g.info = {g.last, g.last:gsub("/[^/]+$", "")} end
+DuarMmx = gg.alert(os.date([[💚 Simple Encrypt [ BYDZ V3 COPY PASTED ]
+🗓️ Date : %A, %B %Y
+
+==================
+📌 Feautures :
+ - Block SSTool
+ - Block Unluac
+ - Block Compiler
+==================]]), "START ↗️", "↙️ EXIT")
+if DuarMmx == nil then end
+if DuarMmx == 1 then end
+if DuarMmx == 2 then print([[==================
+💚 Simple Encrypt [ BYDZ V3 COPY PASTED ]
+==================]]) return os.exit() end
+while true do
+g.info = gg.prompt({
+"📁 Choose Script to Encrypt : ",
+"📁 Select Output Folder: ",
+"🕒 Add Expirity Date",
+"🔐 Add Password",
+"🛡️ Add Minimal GG Required",
+"✏️ Add Rename Blocker",
+"🎃 Custom Header Chunk (LuaxXx)"},
+g.info,
+{"file",
+"path",
+"checkbox",
+"checkbox",
+"checkbox",
+"checkbox",
+"checkbox"})
+if g.info == nil then
+return
+end
+gg.saveVariable(g.info, g.config)
+g.last = g.info[1]
+if loadfile(g.last) == nil then
+return gg.alert([[⚠️Script not Found! ⚠️]])
+else
+g.out = g.last:match("[^/]+$")
+g.out = g.out:gsub(".lua", ".BydzNS")
+g.out = g.info[2] .. "/" .. g.out .. ".lua"
+print([[💚 Simple Encrypt [ BYDZ V3 COPY PASTED ]]])
+print("\n\n☑️ Succes Encrypted!")
+print("📁 File Saved in: ".. g.out.."\n")
+info = {g.out}
+end
+local DATA = io.input(g.last):read('*a')
+if g.info[3] == true then
+day = os.date("%d")
+exp_date = gg.prompt({
+"📆 Set Expiry Date",
+"📝 Type Expired Message"},
+{
+os.date("%Y%m" .. day + 7),
+"⚠️ Script Expired ⚠️️"},
+{"number", "text"})
+end
+if not exp_date then
+gg.setVisible(true)
+elseif exp_date[1] == nil then gg.alert("📆 Date Can Not Be Empty !") gg.setVisible(true)
+else
+print("📅 Expired Date: ".. exp_date[1])
+DATA = '\
+if os.date("%Y%m%d") >= ' .. encvalues(exp_date[1]) .. ' then gg.alert(' .. encvalues(exp_date[2]) .. ') end\n' .. DATA
+end
+if g.info[4] == true then
+PASS = gg["prompt"]({
+"🔐 Set Password For Script:",
+"📝 Type Message For Wrong Password"
+}, {
+"",
+"⚠️ Wrong Password ⚠️"
+}, {
+"text",
+"text"
+})
+end
+if not PASS then
+gg.setVisible(true)
+elseif PASS[1] == nil then
+gg.alert("⚠️ Input Password !")
+gg.setVisible(true)
+else
+print("🔐 Password: ".. PASS[1])
+DATA = 'PASSW = gg.prompt({\'🔒 Input password: \'},{[1]=\'\'},{[1]=\'text\'})\
+if not PASSW the﻿n return\
+end \
+if PASSW[1] == "" then gg.alert("Password Can Not Be Empty ❕") end\
+if PASSW[1] ==' .. encvalues(PASS[1]) .. ' then\
+gg.toast(\'✔️ Password correct❕\')\
+else\
+return gg.alert(' .. encvalues(PASS[2]) .. ') end\n' .. DATA
+end
+if g.info[5] == true then
+VERSION = gg.prompt({"🔐 Set Minimal GG Version",
+"🗒️ Error GG Message"
+}, {
+gg.VERSION,
+"⚠️ Error GG VERSION ⚠️"
+}, {
+"number",
+"text"
+})
+end
+if not VERSION then
+gg.setVisible(true)
+elseif VERSION[1] == nil then
+gg.alert("🛡️ Input Minimal Required GG Version !")
+gg.setVisible(true)
+else
+print("🛡️ Minimal Version Required: "..VERSION[1])
+DATA = '\
+if gg.VERSION < '.. encvalues(VERSION[1]) .. ' then gg.alert(' .. encvalues(VERSION[2]) .. ') end\n' .. DATA
+end
+if g.info[6] == true then
+NAME = gg.prompt({
+"🗒️ Set Name For Script:",
+"📝 Type Message For Name Changed",
+}, {
+g.out:match("[^/]+$"),
+"⚠️ RENAME DETECTED ⚠️"}, {
+"text",
+"text"
+})
+end
+if not NAME then
+gg.setVisible(true)
+elseif NAME[1] == nil then
+gg.alert("📝 Set Name Can Not Be Empty !")
+gg.setVisible(true)
+else
+print("📝 Added Rename Blocker")
+DATA = '\
+NAME = gg.getFile()\
+NAME = NAME:match("[^/]+$")\
+if NAME == ' .. encvalues(NAME[1]) .. ' then else gg.copyText('.. encvalues(NAME[1]) ..') return gg.alert(' .. encvalues(NAME[2]) .. ') end\n' .. DATA
+end
+if g.info[7] == true then
+HEADERCST = gg.prompt({
+"🍎 Type Custom Header (LuaxXx)",
+}, {
+"R",
+}, {
+"text",
+})
+Head45 = HEADERCST[1]
+local HEADERNYA = 'PAKE'
+else
+Head45 = "R"
+end
+if not HEADERCST then
+gg.setVisible(true)
+elseif HEADERCST[1] == nil then
+print("🍓 Lua Header: R")
+return
+else
+print("🍓 Lua Header: Lua".. HEADERCST[1])
+end
+local CstHdr = Head45
+if not load(DATA) then
+print("⚠️ ERROR\n\nFile Can Not Be Encrypted !")
+break 
+else
+local GTBL = {}
+local TBNUB = {}
+function TB(str)
+sd = {}
+gb = {str:byte(1,-1)}
+res = ''
+LESS = '\\000'
+for i = 1, #gb do
+gb[i] = (gb[i] + TBNUB[1] - TBNUB[2] * TBNUB[3] * TBNUB[4] - TBNUB[5] * TBNUB[6] - TBNUB[7] * TBNUB[8] - TBNUB[9] + TBNUB[10] * i) % 256
+res = LESS:rep(gb[i])
+table.insert(sd, '"'..res..'"')
+end
+return "{"..table.concat(sd, ",").."}"
+end
+eek = 1
+for i = 1, 10 do
+gay = math.random(1, 93)
+table.insert(TBNUB, gay)
+end
+function JomKey()
+sd = {}
+res = ''
+LESS = '\\000'
+for i = 1, #TBNUB do
+res = LESS:rep(TBNUB[i])
+table.insert(sd, '"'..res..'"')
+end
+kyyyy = "{"..table.concat(sd, ",").."}"
+table.insert(GTBL, kyyyy)
+end
+JomKey()
+local DATA = [[
+if _A ~= "💚 Simple Encrypt [ BYDZ V3 COPY PASTED ]" then return end
+gg.setVisible(false)
+gg.sleep(300)
+gg.sleep(300)
+io.input(gg.getFile())
+os.remove(gg.getFile())
+gg.setVisible(false)
+if not loadfile(gg.getFile()) then io.output(gg.getFile()) io.write(io.read("*a"), "w") return end
+io.output(gg.getFile())
+io.write(io.read("*a"), "w")
+os.rename(gg.getFile(), "/storage/emulated/0/#")
+os.rename("/storage/emulated/0/#", "/storage/emulated/0/Android/###")
+if not loadfile(gg.getFile()) then os.rename("/storage/emulated/0/Android/###", gg.getFile()) return end
+os.rename("/storage/emulated/0/Android/###", gg.getFile())
+
+]]..DATA..[[
+gg.alert("ok")
+end
+g.g()]]
+for i = 1, 3 do
+load(DATA)
+end
+repeat
+DATA = DATA:gsub('"(.-)"', function(c)
+c = load('return "'..c..'"')()
+T = TB(c)
+table.insert(GTBL, T)
+eek = eek + 1
+return "NES(TBLT["..eek.."])"
+end)
+until DATA:match('"(.-)"') == nil
+repeat
+DATA = DATA:gsub("'(.-)'", function(c)
+c = load("return '"..c.."'")()
+T = TB(c)
+table.insert(GTBL, T)
+eek = eek + 1
+return "NES(TBLT["..eek.."])"
+end)
+until DATA:match("'(.-)'") == nil
+repeat
+DATA = DATA:gsub("[[(.-)]]", function(c)
+c = load("return [["..c.."]]")()
+T = TB(c)
+table.insert(GTBL, T)
+eek = eek + 1
+return "NES(TBLT["..eek.."])"
+end)
+until DATA:match("[[(.-)]]") == nil
+repeat
+DATA = DATA:gsub("[=[(.-)]=]", function(c)
+c = load("return '"..c.."'")()
+T = TB(c)
+table.insert(GTBL, T)
+eek = eek + 1
+return "NES(TBLT["..eek.."])"
+end)
+until DATA:match("[=[(.-)]=]") == nil
+for k, v in pairs(gg) do
+repeat
+ambl = "gg." .. k
+DATA = DATA:gsub(ambl, function()
+T = TB(k)
+table.insert(GTBL, T)
+eek = eek + 1
+return "gg[NES(TBLT["..eek.."])]"
+end)
+until DATA:match(ambl) == nil
+end
+for k, v in pairs(io) do
+repeat
+ambl = "io." .. k
+DATA = DATA:gsub(ambl, function()
+T = TB(k)
+table.insert(GTBL, T)
+eek = eek + 1
+return "io[NES(TBLT["..eek.."])]"
+end)
+until DATA:match(ambl) == nil
+end
+for k, v in pairs(os) do
+repeat
+ambl = "os." .. k
+DATA = DATA:gsub(ambl, function()
+T = TB(k)
+table.insert(GTBL, T)
+eek = eek + 1
+return "os[NES(TBLT["..eek.."])]"
+end)
+until DATA:match(ambl) == nil
+end
+for k, v in pairs(math) do
+repeat
+ambl = "math." .. k
+DATA = DATA:gsub(ambl, function()
+T = TB(k)
+table.insert(GTBL, T)
+eek = eek + 1
+return "math[NES(TBLT["..eek.."])]"
+end)
+until DATA:match(ambl) == nil
+end
+for k, v in pairs(debug) do
+repeat
+ambl = "debug." .. k
+DATA = DATA:gsub(ambl, function()
+T = TB(k)
+table.insert(GTBL, T)
+eek = eek + 1
+return "debug[NES(TBLT["..eek.."])]"
+end)
+until DATA:match(ambl) == nil
+end
+for k, v in pairs(string) do
+repeat
+ambl = "string." .. k
+DATA = DATA:gsub(ambl, function()
+T = TB(k)
+table.insert(GTBL, T)
+eek = eek + 1
+return "string[NES(TBLT["..eek.."])]"
+end)
+until DATA:match(ambl) == nil
+end
+for k, v in pairs(table) do
+repeat
+ambl = "table." .. k
+DATA = DATA:gsub(ambl, function()
+T = TB(k)
+table.insert(GTBL, T)
+eek = eek + 1
+return "table[NES(TBLT["..eek.."])]"
+end)
+until DATA:match(ambl) == nil
+end
+gg.toast("80% Please Wait..")
+file = io.open(g.out, "w")
+file:write([[local _A = "💚 Simple Encrypt [ BYDZ V3 COPY PASTED ]"
+local g = {}
+g.g = function()
+gg.alert("ok")
+local TBLT = {]].. table.concat(GTBL, ",") ..[[}
+function BNS0(c)
+c = #c
+return c
+end
+Ba_Bidun = string
+R_Bdn = Ba_Bidun.char
+function NES(c)
+res = ''
+for i = 1, BNS0(c) do
+res = res..R_Bdn((BNS0(c[i]) - BNS0(TBLT[1][1]) + BNS0(TBLT[1][2]) * BNS0(TBLT[1][3]) * BNS0(TBLT[1][4]) + BNS0(TBLT[1][5]) * BNS0(TBLT[1][6]) + BNS0(TBLT[1][7]) * BNS0(TBLT[1][8]) + BNS0(TBLT[1][9]) - BNS0(TBLT[1][10]) * i) % 256)
+end
+return res
+end
+
+]]..DATA)
+file:close()
+if HEADERNYA == 'PAKE' then
+local TTB = function (A) -- Text to byte
+local Byte = {string.byte(A,1,-1)}
+local Result = ""
+for I , l in pairs(Byte) do
+Result = Result..[[\]]..l
+end
+load("A = \""..Result.."\"")()
+return A
+end
+local gsub , Save , Checker , Text1 , TB = _G["gsub"]
+io.input(g.out)
+local Text = io.read("*a")
+local CD = function (TXT,Len,Header) -- Convert And Dump
+local Dmp = string.dump(load(TXT),true)
+if Len > 2 then 
+TB = {string.match(Header,(string.gsub(Header,".", "(.)")))}
+Text1 = TB[1]..TB[2]
+end
+if Len == 1 then
+Save = string.gsub(Dmp,"\82",TTB(Header),1)
+elseif Len == 2 then
+Save = string.gsub(Dmp,"\82\0",TTB(Header),1)
+elseif Len == 3 then
+Save = string.gsub(Dmp,"\82\0",TTB(Text1),1):gsub("\4",TTB(TB[3]),1)
+elseif Len == 4 then
+Save = string.gsub(Dmp,"\82\0",TTB(Text1),1):gsub("\4\4",TTB(TB[3]..TB[4]),1)
+elseif Len == 5 then
+Save = string.gsub(Dmp,"\82\0",TTB(Text1),1):gsub("\4\4\4",TTB(TB[3]..TB[4]..TB[5]),1)
+elseif Len == 6 then
+Save = string.gsub(Dmp,"\82\0",TTB(Text1),1):gsub("\4\4\4\8",TTB(TB[3]..TB[4]..TB[5]..TB[6]),1)
+end
+return Save
+end
+local Script = CD(Text,(#CstHdr),CstHdr)
+file = io.open(g.out, "w")
+file:write(Script.." ")
+file:close()
+else
+local Script = string.dump(loadfile(g.out), true)
+file = io.open(g.out, "w")
+file:write(Script.." ")
+file:close()
+end
+print("⏳ Clearing Temporary....")
+print("💯 Done Encrypted!")
+return gg.alert("📁 Encrypted File: " .. g.out .. "\n\n💚 Simple Encrypt [ BYDZ V3 COPY PASTED ]")
+end
+end
